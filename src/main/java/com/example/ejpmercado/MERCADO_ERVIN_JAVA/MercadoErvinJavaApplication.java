@@ -8,8 +8,11 @@ public class MercadoErvinJavaApplication {
 	static Assignment1 assign1 = new Assignment1();
 	public static void main(String[] args) {
 		
-		assign1.numberPyramidWhileLoop();
-		//SpringApplication.run(MercadoErvinJavaApplication.class, args);
+		System.out.println(assign1.dayOfTheWeek(7));
+		//assign1.numberPyramidForLoop();
+		//assign1.numberPyramidWhileLoop();
+		//assign1.numberPyramidDoWhileLoop();
+		return;
 	}
 
 }
