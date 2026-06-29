@@ -1,4 +1,4 @@
-package com.example.ejpmercado.MERCADO_ERVIN_JAVA;
+package com.ibm.ejpmercado.mercado_ervin_java;
 import java.util.Scanner;
 
 enum Day {
@@ -6,10 +6,6 @@ enum Day {
 }
 
 public class Assignment1 {
-
-	int askForDayOfTheWeek() {
-		return 0;
-	}
 	
 	int askForNumberFrom1to20() {
 		Scanner scanner = new Scanner(System.in); 
@@ -23,7 +19,34 @@ public class Assignment1 {
 		return given;
 	}
 	
-	Day dayOfTheWeek(int x) {
+	Day dayOfTheWeekSwitchCase(int x) {
+		Scanner scanner = new Scanner(System.in); 
+		System.out.print("Enter valid number from 1-7: ");
+		int given = scanner.nextInt(); 
+		
+		switch (x) {
+			case 1:
+				return Day.Monday;
+			case 2: 
+				return Day.Tuesday;
+			case 3:
+				return Day.Wednesday;
+			case 4:
+				return Day.Thursday;
+			case 5: 
+				return Day.Friday;
+			case 6: 
+				return Day.Saturday;
+			case 7:
+				return Day.Sunday;
+			default :
+	            System.out.println("Invalid day: " + x);
+	            return null;
+		}
+	}
+	
+	
+	Day dayOfTheWeekPatternMatching(int x) {
 		Scanner scanner = new Scanner(System.in); 
 		System.out.print("Enter valid number from 1-7: ");
 		int given = scanner.nextInt(); 
@@ -82,5 +105,10 @@ public class Assignment1 {
 		} while (i < x + 1);
 	}
 	
+	int blackjack(int a, int b) {
+		int i = a >= 22 ? 0 : a;
+		int j = b >= 22 ? 0 : b;
+		return (i > j) ? i : j;
+	}
 	
 }

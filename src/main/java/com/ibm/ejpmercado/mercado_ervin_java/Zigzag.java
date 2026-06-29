@@ -1,4 +1,4 @@
-package com.example.ejpmercado.MERCADO_ERVIN_JAVA;
+package com.ibm.ejpmercado.mercado_ervin_java;
 
 public class Zigzag {
 
