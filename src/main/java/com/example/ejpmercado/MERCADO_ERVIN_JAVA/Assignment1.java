@@ -24,14 +24,18 @@ public class Assignment1 {
 	}
 	
 	Day dayOfTheWeek(int x) {
+		Scanner scanner = new Scanner(System.in); 
+		System.out.print("Enter valid number from 1-7: ");
+		int given = scanner.nextInt(); 
+		
 		return switch (x) {
-			case 1 -> Day.Sunday;
-			case 2 -> Day.Monday;
-			case 3 -> Day.Tuesday;
-			case 4 -> Day.Wednesday;
-			case 5 -> Day.Thursday;
-			case 6 -> Day.Friday;
-			case 7 -> Day.Saturday;
+			case 1 -> Day.Monday;
+			case 2-> Day.Tuesday;
+			case 3 -> Day.Wednesday;
+			case 4 -> Day.Thursday;
+			case 5 -> Day.Friday;
+			case 6 -> Day.Saturday;
+			case 7 -> Day.Sunday;
 			default -> {
 	            System.out.println("Invalid day: " + x);
 	            yield null;
