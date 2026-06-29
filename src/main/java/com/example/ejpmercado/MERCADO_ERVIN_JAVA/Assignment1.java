@@ -28,8 +28,8 @@ public class Assignment1 {
 	void numberPyramidForLoop () {
 		int x = 6;
 		
-		for(int i = 1; i < x; i++) {
-			for (int j = 1; j < i; j++) {
+		for(int i = 1; i < x + 1; i++) {
+			for (int j = 1; j < i + 1; j++) {
 				System.out.print(j + "\t");
 			}
 			System.out.println("");
@@ -37,7 +37,18 @@ public class Assignment1 {
 	}
 
 	void numberPyramidWhileLoop () {
-		
+		int x = 6;
+		int i = 1;
+		int j = 1;
+		while (i < x + 1) {
+			while (j < i + 1) {
+				System.out.print(j + "\t");
+				j++;
+			}
+			System.out.println("");
+			i++;
+			j = 1;
+		}
 	}
 	
 	void numberPyramidDoWhileLoop () {

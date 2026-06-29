@@ -8,7 +8,7 @@ public class MercadoErvinJavaApplication {
 	static Assignment1 assign1 = new Assignment1();
 	public static void main(String[] args) {
 		
-		assign1.numberPyramidForLoop();
+		assign1.numberPyramidWhileLoop();
 		//SpringApplication.run(MercadoErvinJavaApplication.class, args);
 	}
 
