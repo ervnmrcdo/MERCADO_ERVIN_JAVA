@@ -7,7 +7,7 @@ enum Day {
 
 public class Assignment1 {
 	
-	int askForNumberFrom1to20() {
+	static int askForNumberFrom1to20() {
 		Scanner scanner = new Scanner(System.in); 
 		int given = 99;
 		
@@ -19,12 +19,12 @@ public class Assignment1 {
 		return given;
 	}
 	
-	Day dayOfTheWeekSwitchCase(int x) {
+	static Day dayOfTheWeekSwitchCase() {
 		Scanner scanner = new Scanner(System.in); 
 		System.out.print("Enter valid number from 1-7: ");
 		int given = scanner.nextInt(); 
 		
-		switch (x) {
+		switch (given) {
 			case 1:
 				return Day.Monday;
 			case 2: 
@@ -40,18 +40,18 @@ public class Assignment1 {
 			case 7:
 				return Day.Sunday;
 			default :
-	            System.out.println("Invalid day: " + x);
+	            System.out.println("Invalid day: " + given);
 	            return null;
 		}
 	}
 	
 	
-	Day dayOfTheWeekPatternMatching(int x) {
+	static Day dayOfTheWeekPatternMatching() {
 		Scanner scanner = new Scanner(System.in); 
 		System.out.print("Enter valid number from 1-7: ");
 		int given = scanner.nextInt(); 
 		
-		return switch (x) {
+		return switch (given) {
 			case 1 -> Day.Monday;
 			case 2-> Day.Tuesday;
 			case 3 -> Day.Wednesday;
@@ -60,13 +60,13 @@ public class Assignment1 {
 			case 6 -> Day.Saturday;
 			case 7 -> Day.Sunday;
 			default -> {
-	            System.out.println("Invalid day: " + x);
+	            System.out.println("Invalid day: " + given);
 	            yield null;
 			}
 		};
 	}
 	
-	void numberPyramidForLoop () {
+	static void numberPyramidForLoop () {
 		int x = askForNumberFrom1to20();
 		
 		for(int i = 1; i < x + 1; i++) {
@@ -77,7 +77,7 @@ public class Assignment1 {
 		}
 	}
 
-	void numberPyramidWhileLoop () {
+	static void numberPyramidWhileLoop () {
 		int x = askForNumberFrom1to20();
 		int i = 1, j = 1;
 		while (i < x + 1) {
@@ -91,7 +91,7 @@ public class Assignment1 {
 		}
 	}
 	
-	void numberPyramidDoWhileLoop () {
+	static void numberPyramidDoWhileLoop () {
 		int x = askForNumberFrom1to20();
 		int i = 1, j = 1;
 		do {
@@ -105,7 +105,7 @@ public class Assignment1 {
 		} while (i < x + 1);
 	}
 	
-	int blackjack(int a, int b) {
+	static int blackjack(int a, int b) {
 		int i = a >= 22 ? 0 : a;
 		int j = b >= 22 ? 0 : b;
 		return (i > j) ? i : j;
