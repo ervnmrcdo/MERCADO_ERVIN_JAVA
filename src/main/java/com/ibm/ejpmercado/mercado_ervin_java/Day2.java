@@ -59,7 +59,7 @@ class Library {
                 return;
             }
         }
-        System.out.println("Book Not Found");
+        System.out.println("Book Not Found" + title);
     }
 
     void returnBook(String title) {
@@ -70,7 +70,7 @@ class Library {
                 return;
             }
         }
-        System.out.println("Book Not Found");
+        System.out.println("Book Not Found" + title);
     }
 
 }
