@@ -2,7 +2,6 @@ package com.ibm.ejpmercado.mercado_ervin_java;
 
 import java.util.ArrayList;
 
-import javax.sound.midi.SysexMessage;
 
 class Book {
     private String title;
@@ -28,6 +27,8 @@ class Book {
 
     }
 
+
+    
     void getInfo() {
         System.out.println("Name:" + this.title + " Author: " + this.author + " Availability: " + this.available);
     }
@@ -40,6 +41,8 @@ class Book {
 
 class Library {
     ArrayList<Book> books = new ArrayList<>();
+
+    //
 
     void addBook(Book b) {
         this.books.add(b);
