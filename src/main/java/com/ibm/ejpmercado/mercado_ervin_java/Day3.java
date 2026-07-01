@@ -1,47 +1,68 @@
 package com.ibm.ejpmercado.mercado_ervin_java;
 
-// import java.util.ArrayList;
+import java.util.Random;
 
-/**
- * k
- */
-interface Verifiable {
-    boolean verifyPayment();
+// RECORD 
+record Transaction(int transactionID, String paymentMethod, boolean isSuccessful) {
+    final void showTransaction () {
+        System.out.println("Transaction ID: " + transactionID + " Payment Method: " + paymentMethod + " Success: " + isSuccessful);
+        System.out.println("");
+    }
 }
 
-abstract class Payment {
-    int amount;
+// INTERFACE
+interface PaymentValidator {
+    // Abstraction: every payment method must validate but its process of doing so remain hidden.
+    boolean validatePaymentMethod();
+}
 
-    public Payment(int amount) {
+// ABSTRACT + SEALED CLASS
+abstract sealed class PaymentMethod permits PayPalPayment, BankTransferPayment, CreditCardPayment {
+    private final int amount;
+    // Encapsulation: preventing outside access from variables that shouldn't be accessed outside
+
+    // Polymorphism: this function returns different Strings depending on the payment method.
+    abstract String getPaymentType();
+
+    public PaymentMethod(int amount) {
         this.amount = amount;
     }
 
-    void executePayment() {
-    }
-
-    void displayAnnouncement() {
+    final Transaction processPayment() {
+        // Inheritance: this reusable method allows for a repeated use on different subclasses of Payment Method
+        boolean isValid = ((PaymentValidator) this).validatePaymentMethod();
+        int id = new Random().nextInt();
+        return new Transaction(id, getPaymentType(), isValid);
 
     }
 }
 
-class CreditCardPayment extends Payment implements Verifiable {
+// CONCRETE SUBCLASS
+final class CreditCardPayment extends PaymentMethod implements PaymentValidator {
 
-    int cardNumber;
+    private final String cardNumber;
 
-    public CreditCardPayment(int amount, int cardNumber) {
+    public CreditCardPayment(int amount, String cardNumber) {
         super(amount);
         this.cardNumber = cardNumber;
     }
 
     @Override
-    public boolean verifyPayment() {
-        System.out.println("Processing credit card payment...");
-        return (String.valueOf(cardNumber).length() == 16) ? true : false;
+    String getPaymentType() {
+        return "Credit Card";
     }
+
+    @Override
+    public boolean validatePaymentMethod() {
+        System.out.println("Validating credit card...");
+        return (this.cardNumber.length() == 16) ? true : false;
+    }
+
 }
 
-class PayPalPayment extends Payment implements Verifiable {
-    String email;
+// CONCRETE SUBCLASS
+final class PayPalPayment extends PaymentMethod implements PaymentValidator {
+    private final String email;
 
     PayPalPayment(int amount, String email) {
         super(amount);
@@ -53,66 +74,56 @@ class PayPalPayment extends Payment implements Verifiable {
     }
 
     @Override
-    public boolean verifyPayment() {
-        System.out.println("Processing PayPal payment...");
+    String getPaymentType() {
+        return "PayPal";
+    }
+
+    @Override
+    public boolean validatePaymentMethod() {
+        System.out.println("Validating PayPal...");
         return (emailContainsAtSymbol()) ? true : false;
     }
 
 }
 
-class BankTransferPayment extends Payment implements Verifiable {
-    int accountNumber;
+// NON-SEALED CONCRETE SUBCLASS (non-sealed mainly because other banks should be
+// able to extend this)
+non-sealed class BankTransferPayment extends PaymentMethod implements PaymentValidator {
+    private final String accountNumber;
 
-    BankTransferPayment(int accountNumber, int amount) {
+    BankTransferPayment(int amount, String accountNumber) {
         super(amount);
         this.accountNumber = accountNumber;
     }
 
     int getAccountNumberLength() {
-        return String.valueOf(this.accountNumber).length();
+        return this.accountNumber.length();
     }
 
     @Override
-    public boolean verifyPayment() {
-        System.out.println("Processing bank transfer...");
+    String getPaymentType() {
+        return "Bank Transfer";
+    }
+
+    @Override
+    public boolean validatePaymentMethod() {
+        System.out.println("Validating bank account...");
         return (getAccountNumberLength() == 10) ? true : false;
     }
-
-}
-
-sealed abstract class PaymentType permits OnlinePaymentType, OfflinePaymentType {
-}
-
-final class OnlinePaymentType extends PaymentType {
-}
-
-final class OfflinePaymentType extends PaymentType {
-}
-
-sealed class Gateway permits PaymentGateway {
-    void processPayments() {
-
-    }
-}
-
-non-sealed class PaymentGateway extends Gateway {
-}
-
-record PaymentDetails(int transactionID, int amoumt, PaymentType paymentMethod, String timestamp) {
 
 }
 
 class Day3 {
 
     public static void main(String[] args) {
-        Payment creditCard = new CreditCardPayment(1000, 0000000000000000);
-        Payment payPal = new PayPalPayment(1000, "ervinmercado31@gmail.com");
-        Payment BPI = new BankTransferPayment(1000, 0000000000000000);
+        PaymentMethod creditCard = new CreditCardPayment(1000, "1234123412341234");
+        PaymentMethod payPal = new PayPalPayment(1000, "ervinmercado31gmail.com");
+        PaymentMethod BPI = new BankTransferPayment(1000, "1234561234");
 
 
-        PaymentType online = new OnlinePaymentType();
-        PaymentType offline = new OfflinePaymentType();
+        creditCard.processPayment().showTransaction();;
+        payPal.processPayment().showTransaction();;
+        BPI.processPayment().showTransaction();
 
-        Gateway paymentGateway = new PaymentGateway();
     }
 }
