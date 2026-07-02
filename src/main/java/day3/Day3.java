@@ -1,4 +1,4 @@
-package com.ibm.ejpmercado.mercado_ervin_java;
+package day3;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package com.ibm.ejpmercado.mercado_ervin_java;
+package day2;
 
 import java.util.ArrayList;
 
