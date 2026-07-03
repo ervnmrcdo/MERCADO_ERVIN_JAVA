@@ -23,6 +23,7 @@ public class Day5 {
 			bw.write("]");
 			bw.newLine();
 
+			System.out.println("student.json successfully created!");
 		} catch (FileNotFoundException e) {
 			System.out.println("FIle Not Found: " + e);
 		} catch (IOException e) {

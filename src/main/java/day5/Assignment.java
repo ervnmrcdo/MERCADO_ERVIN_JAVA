@@ -100,6 +100,7 @@ class ServerLogAnalyzer {
 					}
 				}
 			}
+
 		createLogSummaryReport(logEntryCount, errorMessages, oldestLog.format(formatter), newestLog.format(formatter));
 		} catch (FileNotFoundException e) {
 			System.out.println("");
