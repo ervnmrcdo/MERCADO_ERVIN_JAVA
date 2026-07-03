@@ -35,7 +35,7 @@ public class Day5 {
 		for (int i = 0; i < studentArray.size(); i++) {
 			System.out.println("\t{");
 			for (int j = 0; j < studentArray.get(i).size(); j++) {
-				System.out.println("\t" + "\"" + headers[j] + "\": " + studentArray.get(i).get(headers[j])
+				System.out.println("\t\t" + "\"" + headers[j] + "\": " + studentArray.get(i).get(headers[j])
 						+ ((j != studentArray.get(i).size() - 1) ? "," : ""));
 			}
 			System.out.println("\t}" + ((i != studentArray.size() - 1) ? "," : ""));

@@ -2,13 +2,11 @@
 	{
 		"id": "123",
 		"name": "Juan",
-		"course": "ComSci",
-		"age": "21"
+		"course": "ComSci"
 	},
 	{
 		"id": "456",
 		"name": "John",
-		"course": "ComEng",
-		"age": "67"
+		"course": "ComEng"
 	}
 ]
