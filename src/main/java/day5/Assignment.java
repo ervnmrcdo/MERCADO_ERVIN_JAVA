@@ -46,20 +46,13 @@ class ServerLogAnalyzer {
 			bw.write("Earliest Timestamp: " + oldestLog); bw.newLine();
 			bw.write("Latest Timestamp: " + newestLog); bw.newLine();
 
+			System.out.println("summary.txt succesfully created");
 			
 		} catch (FileNotFoundException e){
 			System.out.println("");
 		} catch (IOException e){
 			System.out.println("");		
 		}
-		
-		
-		
-		//System.out.println(logEntryCount);
-		//System.out.println(errorMessages);
-		//System.out.println(oldestLog);
-		//System.out.println(newestLog);
-		
 	}
 	
 	
@@ -108,8 +101,6 @@ class ServerLogAnalyzer {
 				}
 			}
 		createLogSummaryReport(logEntryCount, errorMessages, oldestLog.format(formatter), newestLog.format(formatter));
-		//System.out.println(oldestLog);
-		//System.out.println(newestLog);
 		} catch (FileNotFoundException e) {
 			System.out.println("");
 		}catch (IOException e) {
