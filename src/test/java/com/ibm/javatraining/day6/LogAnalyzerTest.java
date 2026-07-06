@@ -13,6 +13,7 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 import org.junit.jupiter.api.AfterEach;
@@ -35,6 +36,8 @@ class LogAnalyzerTest {
 	@AfterEach 
 	public void closing () {
 		System.setOut(originalOut);
+		File summaryText = new File("resources/summary.txt");
+		if (summaryText.exists()) summaryText.delete();
 		
 	}
 	
@@ -129,14 +132,19 @@ class LogAnalyzerTest {
 	void exec006() throws IOException {		
 		//given
 		String file = "src/main/resources/exec006/server.log";
+		
 		File readOnlySummary = new File("resources/summary.txt");
-		readOnlySummary.setReadOnly();
+	    readOnlySummary.getParentFile().mkdirs(); 
+	    readOnlySummary.createNewFile();
+		readOnlySummary.setWritable(false);
 
 		// when
 		LogAnalyzer.main(new String[] {file});
 		
 		//then
+		System.out.println("ello");
 		assertTrue(outContent.toString().contains("Error writing summary file."));
+		System.out.println("ello");
 		Executable executable = () -> Files.readString(Path.of("src/main/resources/exec006/summary.txt"));
 		assertThrows(NoSuchFileException.class, executable);
 
@@ -167,7 +175,21 @@ class LogAnalyzerTest {
 	@Test
 	void exec008 () throws IOException {
 		
+		
+		String expectedFile = Files.readString(Path.of("src/main/resources/exec008/summary.txt"));
+		String file = "src/main/resources/exec008/server.log";
+		
+		LogAnalyzer.main(new String[] {file});
+		
+		String summaryFile = Files.readString(Path.of("resources/summary.txt"));
+		assertEquals(expectedFile, summaryFile);
+	}
+	
+	// Test for summary.txt not created 
+	@Test
+	void exec009 () throws IOException {
 		Executable executable = () -> Files.readString(Path.of("resources/summary.txt"));
 		assertThrows(NoSuchFileException.class, executable);
 	}
+	
 }

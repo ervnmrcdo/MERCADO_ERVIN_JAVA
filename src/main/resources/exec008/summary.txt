@@ -1,0 +1,20 @@
+Log Summary Report
+------------------
+Total Entries: 87
+INFO: 68
+WARN: 10
+ERROR: 9
+
+Error Messages:
+- Failed to connect to external API
+- NullPointerException in UserService.java line 87
+- Timeout while reading data from database
+- FileNotFoundException in ConfigLoader.java line 45
+- Unauthorized access attempt detected
+- Assertion failed in TestCase #45
+- Unable to parse JSON response from API
+- SMTP server not responding
+- Audit log write failure
+
+Earliest Timestamp: 2024-05-10T09:00
+Latest Timestamp: 2024-05-10T09:04:18
