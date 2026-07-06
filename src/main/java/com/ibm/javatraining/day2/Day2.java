@@ -1,4 +1,4 @@
-package day2;
+package com.ibm.javatraining.day2;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package day5;
+package com.ibm.javatraining.day5;
 
 import java.io.*;
 import java.util.*;

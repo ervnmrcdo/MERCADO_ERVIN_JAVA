@@ -1,4 +1,4 @@
-package day1;
+package com.ibm.javatraining.day1;
 
 public class Zigzag {
 

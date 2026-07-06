@@ -1,4 +1,4 @@
-package day4;
+package com.ibm.javatraining.day4;
 
 import java.util.ArrayList;
 import java.util.Comparator;

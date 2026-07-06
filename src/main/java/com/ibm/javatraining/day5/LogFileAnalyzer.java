@@ -1,4 +1,4 @@
-package day5;
+package com.ibm.javatraining.day5;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -21,12 +21,17 @@ class MalformedLogEntryException extends Exception {
 }
 
 class ServerLogAnalyzer {
+
+}
+
+class LogFileAnalyzer {
+	
 	private static boolean checkLogValidity(String line) {
 		return (line.startsWith("[")
 				&& line.contains("]")
 				&& (line.contains("INFO")
-						&& line.contains("WARN")
-						&& line.contains("ERROR"))
+						|| line.contains("WARN")
+						|| line.contains("ERROR"))
 				&& line.contains(":")) ? true : false;
 	}
 
@@ -109,7 +114,6 @@ class ServerLogAnalyzer {
 							case "ERROR":
 								logEntryCount.put(level, logEntryCount.get(level) + 1);
 								errorMessages.add(logDetails);
-								break;
 						}
 						oldestLog = (oldestLog == null || dateAndTime.isBefore(oldestLog)) ? dateAndTime : oldestLog;
 						newestLog = (newestLog == null || dateAndTime.isAfter(newestLog)) ? dateAndTime : newestLog;
@@ -121,18 +125,16 @@ class ServerLogAnalyzer {
 			createLogSummaryReport(logEntryCount, errorMessages, oldestLog.format(formatter),
 					newestLog.format(formatter));
 		} catch (FileNotFoundException e) {
-			System.out.println("");
+			System.out.println("File Not Found");
 		} catch (IOException e) {
-			System.out.println("");
+			System.out.println("IO Exception");
 		} catch (MalformedLogEntryException e) {
-
+			System.out.println("Malformed Log Entry Exception");
 		}
 	}
-}
-
-class Assignment {
+	
 	public static void main(String[] args) {
-		ServerLogAnalyzer.analyzeLogs("server.log");
+		analyzeLogs("yessir");
 	}
 
 }
