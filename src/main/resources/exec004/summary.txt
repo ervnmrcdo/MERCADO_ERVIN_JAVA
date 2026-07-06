@@ -1,0 +1,12 @@
+Log Summary Report
+------------------
+Total Entries: 8
+INFO: 6
+WARN: 1
+ERROR: 1
+
+Error Messages:
+- Assertion failed in TestCase #45
+
+Earliest Timestamp: 2024-05-10T09:02:27
+Latest Timestamp: 2024-05-10T09:02:48

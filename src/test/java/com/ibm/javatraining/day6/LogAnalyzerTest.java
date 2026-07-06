@@ -68,10 +68,15 @@ class LogAnalyzerTest {
 	@Test
 	void exec003() throws IOException {		
 		String file = "src/main/resources/exec003/server.log";
+		String expectedFile = Files.readString(Path.of("src/main/resources/exec003/summary.txt"));		
+
 		LogAnalyzer.main(new String[] {file});
+		String summaryFile = Files.readString(Path.of("resources/summary.txt"));
+		
 		assertTrue(outContent.toString().contains("Skipping malformed line: 2024-05-10 09:00:00]"));	
 		assertTrue(outContent.toString().contains("Skipping malformed line: [2024-05-10 09:00:03"));
-		assertTrue(outContent.toString().contains("Skipping malformed line: 2024-05-10 09:00:06"));		
+		assertTrue(outContent.toString().contains("Skipping malformed line: 2024-05-10 09:00:06"));	
+		assertEquals(expectedFile, summaryFile);
 	}
 	
 	// (Abnormal)
@@ -79,7 +84,11 @@ class LogAnalyzerTest {
 	@Test
 	void exec004() throws IOException {		
 		String file = "src/main/resources/exec004/server.log";
+		String expectedFile = Files.readString(Path.of("src/main/resources/exec004/summary.txt"));		
+
 		LogAnalyzer.main(new String[] {file});
+		String summaryFile = Files.readString(Path.of("resources/summary.txt"));
+
 		assertTrue(outContent.toString().contains("Skipping malformed line: [2024-05-10 09:00:00] INFORMATION: Server started successfully"));
 		assertTrue(outContent.toString().contains("Skipping malformed line: [2024-05-10 09:00:03] LEVELING: Configuration file loaded"));
 		assertTrue(outContent.toString().contains("Skipping malformed line: [2024-05-10 09:00:06] WARNING: Database connection established"));
@@ -88,6 +97,8 @@ class LogAnalyzerTest {
 		assertTrue(outContent.toString().contains("Skipping malformed line: [2024-05-10 09:00:00] level: Server started successfully"));
 		assertTrue(outContent.toString().contains("Skipping malformed line: [2024-05-10 09:00:00] warn: Server started successfully"));
 		assertTrue(outContent.toString().contains("Skipping malformed line: [2024-05-10 09:00:00] : Server started successfully"));
+		assertEquals(expectedFile, summaryFile);
+
 	}
 	
 	// (Abnormal)
