@@ -3,23 +3,20 @@ package com.ibm.javatraining.day7;
 import java.sql.*;
 import java.util.Scanner;
 
+import org.postgresql.util.PSQLException;
+
 public class JDBC {
 
 	private static String url = "jdbc:postgresql://localhost:5432/javatraining";
 	private static String uname = "postgres";
 	private static String password = "password";
 	String insertSql = "insert into student (email, firstname, lastname, password) values (?, ?, ?, ?)";
-	String querySql = "select * from student where (studentid = ? or email like ? or firstname like ? or lastname like ?)";
-	String emailQuerySql = "select * from student where (email = ?)";
-	String updateSql = "update student set password = ?, dateupdated = current_timestamp where (studentid = ?)";
-	
+	String querySql = "select firstname, lastname, email, dateadded, dateupdated from student where (studentid = ? or email like ? or firstname like ? or lastname like ?)";
+	String emailQuerySql = "select studentid, firstname, lastname, email, dateadded, dateupdated, password from student where (email = ?)";
+	String updateSql = "update student set password = ?, dateupdated = current_timestamp where (studentid = ?)";	
 	
 	private static Connection con;
-	
-	JDBC() {
 
-	}
-	
 	private void connectToDatabase() {
 		try {
 			this.con = DriverManager.getConnection(url, uname, password);
@@ -41,30 +38,46 @@ public class JDBC {
 	private void addNewStudent () {
 		String firstname, lastname, email, password;
 		Scanner scanner = new Scanner(System.in); 
-		
-		System.out.print("\nEnter new user First Name: ");
-		firstname = scanner.nextLine().strip();
-		
-		System.out.print("Enter new user Last Name: ");
-		lastname = scanner.nextLine().strip();
 
 		System.out.print("Enter new user Email Address: ");
 		email = scanner.nextLine().strip();
-
-		System.out.print("Enter new user Password: ");
-		password = scanner.nextLine().strip();
 		
+		//verify if email exists in database
 		try {			
-			PreparedStatement ps = con.prepareStatement(this.insertSql);
-			ps.setString(1, email);
-			ps.setString(2, firstname);
-			ps.setString(3, lastname);
-			ps.setString(4, password);
-			ps.execute();
+			PreparedStatement checkEmail = con.prepareStatement(emailQuerySql);
+			checkEmail.setString(1, email);
+			ResultSet rs = checkEmail.executeQuery();
+			
+				if (!rs.next()) {
+					
+					System.out.print("\nEnter new user First Name: ");
+					firstname = scanner.nextLine().strip();
+					
+					System.out.print("Enter new user Last Name: ");
+					lastname = scanner.nextLine().strip();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+					System.out.print("Enter new user Password: ");
+					password = scanner.nextLine().strip();
+					
+					try {			
+						PreparedStatement ps = con.prepareStatement(this.insertSql);
+						ps.setString(1, email);
+						ps.setString(2, firstname);
+						ps.setString(3, lastname);
+						ps.setString(4, password);
+						ps.execute();
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				} else {
+					System.out.println("Email exists in database.");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+
 	}
 	
 	private void viewUser() {
@@ -106,8 +119,6 @@ public class JDBC {
 				System.out.println("Query did not match anything form database");
 			}
 
-
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
@@ -139,12 +150,14 @@ public class JDBC {
 						updatePs.setString(1, newPassword);
 						updatePs.setInt(2, studentid);
 						updatePs.execute();		
+						System.out.println("Password Updated");
 						return;
 					}
 					System.out.println("Incorrect Password");
 					
 				} else {
 					System.out.println("Email does not exist in database.");
+					
 				}
 			}
 		} catch (SQLException e) {
@@ -180,16 +193,20 @@ public class JDBC {
 							PreparedStatement updatePs = con.prepareStatement(updateSql);
 							updatePs.setInt(1, studentid);
 							updatePs.execute();		
-						}else {
+							System.out.println("Account succesfully deleted");
+							return;
+						} else {
 							System.out.println("Account was not deleted. \"delete\" did not match");							
+							return;
 						}
 					}
 					System.out.println("Incorrect Password");
+					return;
 					
 				} else {
 					System.out.println("Email does not exist in database.");
+					
 				}
-				System.out.println("Account succesfully deleted");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
