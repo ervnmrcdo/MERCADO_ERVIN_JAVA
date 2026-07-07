@@ -30,8 +30,8 @@ class LogFileAnalyzer {
 		return (line.startsWith("[")
 				&& line.contains("]")
 				&& (line.contains("INFO")
-						|| line.contains("WARN")
-						|| line.contains("ERROR"))
+						&& line.contains("WARN")
+						&& line.contains("ERROR"))
 				&& line.contains(":")) ? true : false;
 	}
 
@@ -134,7 +134,7 @@ class LogFileAnalyzer {
 	}
 	
 	public static void main(String[] args) {
-		analyzeLogs("yessir");
+		analyzeLogs("server.log");
 	}
 
 }

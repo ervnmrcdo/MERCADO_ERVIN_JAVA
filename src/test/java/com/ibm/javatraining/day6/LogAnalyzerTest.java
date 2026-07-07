@@ -1,5 +1,4 @@
 package com.ibm.javatraining.day6;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
@@ -13,13 +12,12 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
-import com.ibm.javatraining.day6.LogAnalyzer;
+//import com.ibm.javatraining.day6.LogAnalyzer;
 
 class LogAnalyzerTest {
 
@@ -42,7 +40,7 @@ class LogAnalyzerTest {
 	}
 	
 	// (Normal)
-	// checks for the standard execution
+	// Checks for the standard execution
 	@Test
 	void exec001() throws IOException {
 		
@@ -142,9 +140,7 @@ class LogAnalyzerTest {
 		LogAnalyzer.main(new String[] {file});
 		
 		//then
-		System.out.println("ello");
 		assertTrue(outContent.toString().contains("Error writing summary file."));
-		System.out.println("ello");
 		Executable executable = () -> Files.readString(Path.of("src/main/resources/exec006/summary.txt"));
 		assertThrows(NoSuchFileException.class, executable);
 
@@ -171,7 +167,8 @@ class LogAnalyzerTest {
 		assertThrows(NoSuchFileException.class, executable);
 	}
 	
-	// Test for summary.txt not created 
+	// (Normal)
+	// Test for date and time not in strictly ascending and descending order 
 	@Test
 	void exec008 () throws IOException {
 		
@@ -185,11 +182,20 @@ class LogAnalyzerTest {
 		assertEquals(expectedFile, summaryFile);
 	}
 	
+	// (Abnormal)
 	// Test for summary.txt not created 
 	@Test
 	void exec009 () throws IOException {
 		Executable executable = () -> Files.readString(Path.of("resources/summary.txt"));
 		assertThrows(NoSuchFileException.class, executable);
 	}
+	
+	// (Normal)
+	// class Constructor coverage
+	@Test
+	void exec010 () throws IOException {
+		new LogAnalyzer();
+	}
+	
 	
 }
