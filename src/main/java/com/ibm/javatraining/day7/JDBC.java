@@ -3,7 +3,6 @@ package com.ibm.javatraining.day7;
 import java.sql.*;
 import java.util.Scanner;
 
-
 public class JDBC {
 
 	private static String url = "jdbc:postgresql://localhost:5432/javatraining";
@@ -25,11 +24,10 @@ public class JDBC {
 	
 	private void closeConnection () {
 		try {
-			System.out.println("See you next time!");
+			System.out.println("\nSee you next time!");
 			con.close();
 			con = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -38,16 +36,16 @@ public class JDBC {
 		String firstname, lastname, email, password;
 		Scanner scanner = new Scanner(System.in); 
 		
-		System.out.println("Enter new user First Name: ");
+		System.out.print("\nEnter new user First Name: ");
 		firstname = scanner.nextLine().strip();
 		
-		System.out.println("Enter new user Last Name: ");
+		System.out.print("Enter new user Last Name: ");
 		lastname = scanner.nextLine().strip();
 
-		System.out.println("Enter new user Email Address: ");
+		System.out.print("Enter new user Email Address: ");
 		email = scanner.nextLine().strip();
 
-		System.out.println("Enter new user Password: ");
+		System.out.print("Enter new user Password: ");
 		password = scanner.nextLine().strip();
 		
 		try {			
@@ -92,8 +90,7 @@ public class JDBC {
 					System.out.println("\nName: " + firstname + " " +  lastname);
 					System.out.println("Email: " + email);
 					System.out.println("Date Created: " + dateCreated);
-					System.out.println("Last Updated: " + lastUpdated+ "\n") ;
-
+					System.out.println("Last Updated: " + lastUpdated) ;
 			}						
 
 			if (emptyQuery) {
@@ -111,7 +108,7 @@ public class JDBC {
 		String accountEmail;
 		Scanner scanner = new Scanner(System.in); 
 		
-		System.out.print("Enter email of account: ");
+		System.out.print("\nEnter email of account: ");
 		accountEmail = scanner.nextLine().strip();
 		
 		try {			
@@ -152,7 +149,7 @@ public class JDBC {
 		String accountEmail;
 		Scanner scanner = new Scanner(System.in); 
 		
-		System.out.print("Enter email of account to be deleted: ");
+		System.out.print("\nEnter email of account to be deleted: ");
 		accountEmail = scanner.nextLine().strip();
 		
 		try {			
@@ -177,9 +174,9 @@ public class JDBC {
 							PreparedStatement updatePs = con.prepareStatement(updateSql);
 							updatePs.setInt(1, studentid);
 							updatePs.execute();		
-							return;							
+						}else {
+							System.out.println("Account was not deleted. \"delete\" did not match");							
 						}
-						System.out.println("Account was not deleted. \"delete\" did not match");
 					}
 					System.out.println("Incorrect Password");
 					
@@ -194,16 +191,14 @@ public class JDBC {
 	}
 	
 	private void showMenu() {
-		System.out.println("===MENU===");
+		System.out.println("\n===MENU===");
 		System.out.println("[A]dd");
 		System.out.println("[V]iew");
 		System.out.println("[U]pdate");		
 		System.out.println("[D]elete");		
 		System.out.println("[Q]uit");
 	}
-	
-//	private void rediract
-	
+		
 	public void runGUI() {
 		this.connectToDatabase();
 		while (con != null) {
