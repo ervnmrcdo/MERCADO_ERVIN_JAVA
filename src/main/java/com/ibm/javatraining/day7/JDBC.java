@@ -8,6 +8,12 @@ public class JDBC {
 	private static String url = "jdbc:postgresql://localhost:5432/javatraining";
 	private static String uname = "postgres";
 	private static String password = "password";
+	String insertSql = "insert into student (email, firstname, lastname, password) values (?, ?, ?, ?)";
+	String querySql = "select * from student where (studentid = ? or email like ? or firstname like ? or lastname like ?)";
+	String emailQuerySql = "select * from student where (email = ?)";
+	String updateSql = "update student set password = ?, dateupdated = current_timestamp where (studentid = ?)";
+	
+	
 	private static Connection con;
 	
 	JDBC() {
@@ -49,8 +55,7 @@ public class JDBC {
 		password = scanner.nextLine().strip();
 		
 		try {			
-			String sql = "insert into student (email, firstname, lastname, password) values (?, ?, ?, ?)";
-			PreparedStatement ps = con.prepareStatement(sql);
+			PreparedStatement ps = con.prepareStatement(this.insertSql);
 			ps.setString(1, email);
 			ps.setString(2, firstname);
 			ps.setString(3, lastname);
@@ -71,11 +76,15 @@ public class JDBC {
 		queryString = scanner.nextLine().strip();
 		
 		try {			
-			String sql = "select * from student where (email = ? or firstname = ? or lastname = ?)";
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, queryString);
-			ps.setString(2, queryString);
-			ps.setString(3, queryString);
+			PreparedStatement ps = con.prepareStatement(querySql);
+			try {
+			    ps.setInt(1, Integer.parseInt(queryString));
+			} catch (NumberFormatException e) {
+			    ps.setInt(1, -1); 
+			}
+			ps.setString(2, "%" + queryString + "%");
+			ps.setString(3, "%" + queryString + "%");
+			ps.setString(4, "%" + queryString + "%");
 
 			ResultSet rs = ps.executeQuery();
 			
@@ -112,8 +121,7 @@ public class JDBC {
 		accountEmail = scanner.nextLine().strip();
 		
 		try {			
-			String sql = "select * from student where (email = ?)";
-			PreparedStatement ps = con.prepareStatement(sql);
+			PreparedStatement ps = con.prepareStatement(this.emailQuerySql);
 			ps.setString(1, accountEmail);
 			ResultSet rs = ps.executeQuery();
 			
@@ -127,8 +135,7 @@ public class JDBC {
 						System.out.print("Enter new password: ");
 						String newPassword = scanner.nextLine();
 						int studentid = rs.getInt("studentid");
-						String updateSql = "update student set password = ?, dateupdated = current_timestamp where (studentid = ?)";
-						PreparedStatement updatePs = con.prepareStatement(updateSql);
+						PreparedStatement updatePs = con.prepareStatement(this.updateSql);
 						updatePs.setString(1, newPassword);
 						updatePs.setInt(2, studentid);
 						updatePs.execute();		
@@ -153,8 +160,7 @@ public class JDBC {
 		accountEmail = scanner.nextLine().strip();
 		
 		try {			
-			String sql = "select * from student where (email = ?)";
-			PreparedStatement ps = con.prepareStatement(sql);
+			PreparedStatement ps = con.prepareStatement(emailQuerySql);
 			ps.setString(1, accountEmail);
 			ResultSet rs = ps.executeQuery();
 			
